@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BAD_POINTS, GOOD_POINTS, LENGTHS, REVISIT, SCENES, type Answers } from "@/lib/survey";
+import { BAD_POINTS, GOOD_POINTS, LENGTHS, REVISIT, SCENES, TASTES, type Answers } from "@/lib/survey";
 
 type Props = {
   storeId: string;
@@ -17,6 +17,7 @@ const initial: Answers = {
   rating: 0,
   scene: "",
   menus: [],
+  tastes: [],
   goodPoints: [],
   badPoints: [],
   revisit: "",
@@ -48,7 +49,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
   const [copied, setCopied] = useState(false);
   const [opened, setOpened] = useState(false);
 
-  const toggle = (key: "menus" | "goodPoints" | "badPoints", v: string) =>
+  const toggle = (key: "menus" | "tastes" | "goodPoints" | "badPoints", v: string) =>
     setA((p) => {
       let next = p[key].includes(v) ? p[key].filter((x) => x !== v) : [...p[key], v];
       // 「特になし」は他と同時に選べない
@@ -248,6 +249,14 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
               {menus.map((m) => (
                 <Chip key={m} active={a.menus.includes(m)} onClick={() => toggle("menus", m)}>
                   {m}
+                </Chip>
+              ))}
+            </div>
+            <Q sub="いくつでも" className="mt-6">味の感想は？</Q>
+            <div className="flex flex-wrap gap-2">
+              {TASTES.map((t) => (
+                <Chip key={t} active={a.tastes.includes(t)} onClick={() => toggle("tastes", t)}>
+                  {t}
                 </Chip>
               ))}
             </div>

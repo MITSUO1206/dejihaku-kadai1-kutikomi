@@ -13,6 +13,18 @@ export const GOOD_POINTS = [
   "ドリンク",
 ] as const;
 
+// 味の感想（AIが味の説明に使っていいのは、ここで選ばれた言葉だけ）
+export const TASTES = [
+  "ジューシー",
+  "香ばしい",
+  "やわらかい",
+  "あっさり",
+  "こってり",
+  "甘め",
+  "味が濃いめ",
+  "塩加減がちょうどいい",
+] as const;
+
 export const BAD_POINTS = [
   "待ち時間",
   "価格",
@@ -30,6 +42,7 @@ export type Answers = {
   rating: number; // 1〜5
   scene: string;
   menus: string[];
+  tastes: string[];
   goodPoints: string[];
   badPoints: string[];
   revisit: string;

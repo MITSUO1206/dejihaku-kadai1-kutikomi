@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { getStore } from "@/lib/stores";
 import { SYSTEM_PROMPT, buildUserPrompt } from "@/lib/prompt";
-import { BAD_POINTS, GOOD_POINTS, LENGTHS, REVISIT, SCENES, type Answers } from "@/lib/survey";
+import { BAD_POINTS, GOOD_POINTS, LENGTHS, REVISIT, SCENES, TASTES, type Answers } from "@/lib/survey";
 
 const client = new Anthropic(); // ANTHROPIC_API_KEY を環境変数から読む
 
@@ -26,6 +26,7 @@ function sanitize(body: unknown, menus: string[], features: string[]): Answers |
     rating,
     scene: one(b.scene, SCENES),
     menus: list(b.menus, menus),
+    tastes: list(b.tastes, TASTES),
     goodPoints: list(b.goodPoints, [...GOOD_POINTS, ...features]),
     badPoints: list(b.badPoints, BAD_POINTS),
     revisit: one(b.revisit, REVISIT),
