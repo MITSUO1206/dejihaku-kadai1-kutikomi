@@ -194,14 +194,14 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
           <div className="h-full rounded-full bg-brand transition-all" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} />
         </div>
         <span className="text-xs font-bold text-ink/60">
-          {step + 1}/{STEPS.length}
+          {step + 1} / {STEPS.length} ページ
         </span>
       </div>
 
       <div className="rounded-3xl bg-white p-5 shadow-card">
         {step === 0 && (
           <>
-            <Q n={1}>今日の満足度は？</Q>
+            <Q>今日の満足度は？</Q>
             <div className="flex justify-center gap-1.5 py-4">
               {[1, 2, 3, 4, 5].map((n) => (
                 <button
@@ -223,7 +223,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
 
         {step === 1 && (
           <>
-            <Q n={2}>どなたと来店されましたか？</Q>
+            <Q>どなたと来店されましたか？</Q>
             <div className="flex flex-wrap gap-2">
               {SCENES.map((s) => (
                 <Chip
@@ -243,7 +243,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
 
         {step === 2 && (
           <>
-            <Q n={3} sub="いくつでも">注文したメニューは？</Q>
+            <Q sub="いくつでも">注文したメニューは？</Q>
             <div className="flex flex-wrap gap-2">
               {menus.map((m) => (
                 <Chip key={m} active={a.menus.includes(m)} onClick={() => toggle("menus", m)}>
@@ -256,7 +256,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
 
         {step === 3 && (
           <>
-            <Q n={4} sub="いくつでも">よかったところは？</Q>
+            <Q sub="いくつでも">よかったところは？</Q>
             <div className="flex flex-wrap gap-2">
               {[...features, ...GOOD_POINTS].map((g) => (
                 <Chip key={g} active={a.goodPoints.includes(g)} onClick={() => toggle("goodPoints", g)}>
@@ -269,7 +269,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
 
         {step === 4 && (
           <>
-            <Q n={5} sub="いくつでも">気になったところは？</Q>
+            <Q sub="いくつでも">気になったところは？</Q>
             <div className="flex flex-wrap gap-2">
               {BAD_POINTS.map((b) => (
                 <Chip key={b} active={a.badPoints.includes(b)} onClick={() => toggle("badPoints", b)}>
@@ -277,7 +277,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
                 </Chip>
               ))}
             </div>
-            <Q n={6} className="mt-6">また来たいですか？</Q>
+            <Q className="mt-6">また来たいですか？</Q>
             <div className="flex flex-wrap gap-2">
               {REVISIT.map((r) => (
                 <Chip key={r} active={a.revisit === r} onClick={() => setA({ ...a, revisit: r })}>
@@ -290,7 +290,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
 
         {step === 5 && (
           <>
-            <Q n={7} sub="任意">ひとことあれば</Q>
+            <Q sub="任意">ひとことあれば</Q>
             <textarea
               value={a.comment}
               onChange={(e) => setA({ ...a, comment: e.target.value })}
@@ -299,7 +299,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
               placeholder="例）つくねが好きすぎる"
               className="w-full resize-none rounded-2xl border-2 border-line p-3 text-[15px] outline-none focus:border-brand"
             />
-            <Q n={8} className="mt-6">文章の長さ</Q>
+            <Q className="mt-6">文章の長さ</Q>
             <div className="flex gap-2">
               {LENGTHS.map((l) => (
                 <Chip key={l} active={a.length === l} onClick={() => setA({ ...a, length: l })}>
@@ -331,10 +331,10 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
   );
 }
 
-function Q({ n, sub, children, className = "" }: { n: number; sub?: string; children: React.ReactNode; className?: string }) {
+function Q({ sub, children, className = "" }: { sub?: string; children: React.ReactNode; className?: string }) {
   return (
     <h2 className={`mb-4 flex items-center gap-2 text-lg font-black text-ink ${className}`}>
-      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand/10 text-sm text-brand">Q{n}</span>
+      <span className="h-5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
       {children}
       {sub && <span className="text-xs font-bold text-ink/40">（{sub}）</span>}
     </h2>
