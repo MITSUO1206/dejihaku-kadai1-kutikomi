@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# クチコミノート（口コミ作成システム）
 
-## Getting Started
+アンケートに答える → AIが口コミ文をつくる → コピーしてGoogleマップに投稿、までの流れを作る課題制作です。
 
-First, run the development server:
+## ページ
+| URL | 内容 |
+|---|---|
+| `/` | サービス紹介（LP） |
+| `/s/demo` | お客様が答えるアンケート（デモ店舗「炭火焼鳥 とりまる」） |
+| `/api/generate` | Claudeで口コミ文を作るAPI |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 主なファイル
+- `src/lib/prompt.ts` … **口コミ文のチューニング**（口調・書き出し・クセをランダムに選ぶ／AIっぽい表現を禁止）
+- `src/lib/stores.ts` … 店舗の設定（店名・メニュー・特徴・GoogleのプレイスID）
+- `src/lib/survey.ts` … アンケートの選択肢
+- `src/app/s/[storeId]/SurveyForm.tsx` … アンケート画面
+- `src/app/page.tsx` … LP
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ローカルで動かす
+1. `.env.example` を `.env.local` にコピーして、`ANTHROPIC_API_KEY` を入れる
+2. `npm install`
+3. `npm run dev` → http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Vercelに公開する
+1. GitHubにpushして、Vercelでリポジトリを読み込む
+2. Settings → Environment Variables に `ANTHROPIC_API_KEY` を登録
+3. Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 店舗を追加する
+`src/lib/stores.ts` に店舗を追加すると `/s/{id}` でアンケートが開けます。
+`googlePlaceId` を入れると、ボタンからそのお店のGoogle口コミ投稿画面が直接開きます（未設定ならGoogleマップの検索結果が開きます）。
