@@ -209,10 +209,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
                   key={n}
                   type="button"
                   aria-label={`${n}つ星`}
-                  onClick={() => {
-                    setA({ ...a, rating: n });
-                    setTimeout(next, 250);
-                  }}
+                  onClick={() => setA({ ...a, rating: n })}
                   className={`text-5xl transition active:scale-90 ${n <= a.rating ? "text-star" : "text-line"}`}
                 >
                   ★
@@ -230,10 +227,7 @@ export default function SurveyForm({ storeId, storeName, menus, features, review
                 <Chip
                   key={s}
                   active={a.scene === s}
-                  onClick={() => {
-                    setA({ ...a, scene: s });
-                    setTimeout(next, 200);
-                  }}
+                  onClick={() => setA({ ...a, scene: s })}
                 >
                   {s}
                 </Chip>
